@@ -1,0 +1,38 @@
+[user]
+	name = 6chinwei
+	email = 6chinwei@gmail.com
+[color]
+	ui = true
+[alias]
+	adda = add -A
+ 	al = add .
+ 	bl = branch -a
+ 	br = branch
+ 	ci = commit
+	cim = commit -m
+ 	cima = commit -a -m
+ 	ck = checkout
+ 	fa = fetch --all
+ 	lg = log --graph --decorate
+ 	ll = log --graph --oneline --decorate -10
+ 	mg = merge
+ 	mgnf = merge --no-ff
+ 	pl = pull
+ 	plb = pull --rebase
+ 	r = remote
+ 	rb = rebase
+ 	rba = rebase --abort
+ 	rbc = rebase --continue
+ 	rbi = rebase -i
+ 	reseth = reset --hard HEAD
+ 	rhh = reset --hard HEAD
+ 	rl = remote -v
+	st = status
+	sha = rev-parse HEAD
+        sw = switch
+        swd = switch --detach
+	tmp = stash
+	tmpd = stash pop
+	tree = log --all --oneline --decorate --graph --author-date-order
+[push]
+	autoSetupRemote = true

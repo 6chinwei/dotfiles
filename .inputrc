@@ -1,0 +1,66 @@
+## SMARTER TAB-COMPLETION (Readline bindings) ##
+
+# 檔案名稱自動完成時忽略大小寫
+# 範例：輸入 "doc" 按 Tab，可匹配 "Documents" 或 "documents"
+set completion-ignore-case on
+
+# 將連字符和下劃線視為等價
+# 範例：輸入 "my-file" 按 Tab，可匹配 "my_file"
+set completion-map-case on
+
+# 第一次按 Tab 時，若有模糊匹配，直接顯示所有選項
+# 範例：輸入 "do" 按 Tab，若有 "doc1" 和 "doc2"，直接顯示兩者
+set show-all-if-ambiguous on
+
+# 自動完成符號連結的目錄時，立即加上斜杠
+# 範例：若 "link" 是指向目錄的符號連結，完成後顯示 "link/"
+set mark-symlinked-directories on
+
+# 顯示所有自動完成結果，不分頁
+set page-completions off
+
+# 列出自動完成選項時，使用不同顏色顯示共同前綴，顏色來自 LS_COLORS 環境變數
+# 範例：輸入 "do" 按 Tab，若有 "doc1" 和 "doc2"，"do" 部分會以不同顏色顯示
+set colored-completion-prefix on
+
+# 自動完成結果依檔案類型顯示不同顏色，顏色來自 LS_COLORS 環境變數
+# 範例：目錄顯示藍色，可執行檔顯示綠色，普通檔案顯示白色
+set colored-stats on
+
+# 使用已輸入的文字作為前綴，可用上下鍵搜尋歷史命令
+# 範例：輸入 "cd" 按 Up 鍵，顯示最近的 "cd /usr" 或 "cd ~/src"
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# macOS 使用 Option + 左/右箭頭鍵，按單詞移動光標
+# 範例：在 "cd ~/src/mozilla" 中，按 Option + 右箭頭，光標跳到 "src" 前
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# 除非輸入以點號開頭，否則不自動完成隱藏檔案
+# 範例：輸入 "ba" 按 Tab，不會匹配 ".bashrc"，但輸入 ".ba" 會匹配
+set match-hidden-files off
+
+# 若自動完成選項超過 200 個，詢問是否顯示全部，即 "Display all 200 possibilities? (y or n)"
+set completion-query-items 200
+
+# 自動完成時顯示額外檔案資訊，類似 `ls -F`
+# 目錄後加 "/" (如 "src/")
+# 可執行檔後加 "*" (如 "run*")
+# 符號連結後加 "@" (如 "link-to-file@")
+# 普通檔案不加任何符號 (如 "file")
+set visible-stats on
+
+# 自動完成時更智能，會參考光標後的文字
+# 範例：輸入 "cd ~/src/mozil"，光標在 "z" 上，按 Tab 補全為 "cd ~/src/mozilla"
+set skip-completed-text on
+
+# 允許 UTF-8 輸入和輸出，避免顯示如 $'\0123\0456' 的轉義序列
+# 範例：輸入中文 "測試"，顯示為 "測試" 而非亂碼或轉義
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# 使用 Alt/Meta + Delete 鍵刪除前一個單詞
+# 範例：在 "cd ~/src/mozilla" 中，光標在 "mozilla" 上，按 Alt + Delete 刪除 "mozilla"
+"\e[3;3~": kill-word
