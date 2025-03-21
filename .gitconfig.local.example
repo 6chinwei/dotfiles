@@ -1,0 +1,7 @@
+# Example of a local .gitconfig file
+#
+# Copy this file and rename it to `.gitconfig.local`. It will then be sourced by `~/.gitconfig`.
+
+[user]
+    name = 6chinwei
+    email = 6chinwei@gmail.com

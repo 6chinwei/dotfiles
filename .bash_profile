@@ -2,23 +2,20 @@
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
 # Check whether command exists
-function command_exists {
-  type $1 > /dev/null 2>&1
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
 }
 
 # Add Homebrew to PATH
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Homebrew bash completion
-if command_exists brew
-then
+if command_exists brew; then
   HOMEBREW_PREFIX="$(brew --prefix)"
-  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
-  then
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
     source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
   else
-    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
-    do
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
       [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
     done
   fi
@@ -33,45 +30,37 @@ alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew' # Don't update Homebrew before insta
 if command_exists eza; then
   alias ls='env EZA_COLORS="ur=35:uw=35:ux=35:ue=35:gr=35:gw=35:gx=35:tr=35:tw=35:tx=35" eza --header --group --time-style=long-iso'
 else 
-  echo "'eza' is not installed. Recommend to install it by Homebrew"
+  echo "'eza' is not installed. Recommend installing it via Homebrew" >&2
 fi
 
-# Replace `cat` with `bat`  if it exists
+# Replace `cat` with `bat` if it exists
 if command_exists bat; then
   alias cat='bat'
 else 
-  echo "'bat' is not installed. Recommend to install it by Homebrew"
+  echo "'bat' is not installed. Recommend installing it via Homebrew" >&2
 fi
 
 # Git auto completion
-[[ -f "$HOME/.git-completion.bash" ]] && source "$HOME/.git-completion.bash"
+[[ -r "$HOME/.git_completion.bash" ]] && source "$HOME/.git_completion.bash"
 
 # Prompt config
-[[ -f "$HOME/.prompt_config" ]] && source "$HOME/.prompt_config"
+[[ -r "$HOME/.prompt_config.bash" ]] && source "$HOME/.prompt_config.bash"
 
 # Custom functions
-[[ -f "$HOME/.functions" ]] && source "$HOME/.functions"
+[[ -r "$HOME/.functions.bash" ]] && source "$HOME/.functions.bash"
 
 # SSH Agent
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-    eval `ssh-agent`
-    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-
-ssh-add -l | grep "The agent has no identities" && echo "Adding SSH Agent..." \
-  && ssh-add --apple-use-keychain ~/.ssh/6chinwei_github
+[[ -f "$HOME/.ssh_agent.bash" ]] && source "$HOME/.ssh_agent.bash"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # Load nvm
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # Load nvm bash_completion
 
 # History settings
 # Use standard ISO 8601 timestamp: %Y-%m-%d %H:%M:%S (24-hours format)
 export HISTTIMEFORMAT='%F %T '
-# Ignore duplicates
+# Ignore duplicates and remove older duplicates
 export HISTCONTROL="ignoredups"
 # Ignore commands that start with a space
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
@@ -81,7 +70,7 @@ export HISTFILESIZE=$HISTSIZE
 # Sync history between multiple terminals
 # Save and reload the history after each command finishes
 shopt -s histappend
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
 # Composer global vendor
 # export PATH="$PATH:$HOME/.composer/vendor/bin"
