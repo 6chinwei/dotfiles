@@ -1,7 +1,6 @@
 # Alias
 
 alias mv='mv -v'
-alias rm='rm -v'
 alias cp='cp -v'
 
 alias grep='grep --color=auto'
