@@ -32,6 +32,7 @@
    ```sh
    $ cp .gitconfig.local.example ~/.gitconfig.local
    ```
+   如果有多個 Git User 想根據資料夾分開設定，可參考註解使用 `[includeIf]`
 1. 建立 SSH Key，並把 SSH Key 路徑寫入 `~/.ssh_agent.bash` 的
    ```sh
    $ ssh-add --apple-use-keychain ~/.ssh/6chinwei_github
