@@ -23,7 +23,7 @@ fi
 
 # Replace `ls` with `eza` if it exists
 if command_exists eza; then
-  alias ls='env EZA_COLORS="ur=35:uw=35:ux=35:ue=35:gr=35:gw=35:gx=35:tr=35:tw=35:tx=35" eza --header --group --time-style=long-iso'
+  alias ls='env EZA_COLORS="ur=35:uw=35:ux=35:ue=35:gr=35:gw=35:gx=35:tr=35:tw=35:tx=35" eza --header --group --time-style=long-iso --group-directories-first --sort=extension'
 else 
   echo "'eza' is not installed. Recommend installing it via Homebrew" >&2
 fi
