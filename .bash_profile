@@ -70,6 +70,10 @@ export HISTFILESIZE=$HISTSIZE
 # shopt -s histappend
 # export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
+# iTerm2 shell integration
+# Install the integration file by clicking iTerm2 menu > 'Install Shell Integration'
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
 # Composer global vendor
 # export PATH="$PATH:$HOME/.composer/vendor/bin"
 
