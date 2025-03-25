@@ -21,11 +21,6 @@ if command_exists brew; then
   fi
 fi
 
-# Alias
-alias grep='grep --color=auto'
-alias cl='clear'
-alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew' # Don't update Homebrew before installing
-
 # Replace `ls` with `eza` if it exists
 if command_exists eza; then
   alias ls='env EZA_COLORS="ur=35:uw=35:ux=35:ue=35:gr=35:gw=35:gx=35:tr=35:tw=35:tx=35" eza --header --group --time-style=long-iso'
@@ -52,6 +47,9 @@ fi
 # SSH Agent
 [[ -f "$HOME/.ssh_agent.bash" ]] && source "$HOME/.ssh_agent.bash"
 
+# Alias
+[[ -r "$HOME/.alias.bash" ]] && source "$HOME/.alias.bash"
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # Load nvm
@@ -69,8 +67,8 @@ export HISTSIZE=100000
 export HISTFILESIZE=$HISTSIZE
 # Sync history between multiple terminals
 # Save and reload the history after each command finishes
-shopt -s histappend
-export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
+# shopt -s histappend
+# export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
 # Composer global vendor
 # export PATH="$PATH:$HOME/.composer/vendor/bin"
@@ -85,3 +83,6 @@ export PROMPT_COMMAND="history -a; history -r; $PROMPT_COMMAND"
 
 # Crowdin
 # export PATH="/opt/homebrew/opt/crowdin@3/bin:$PATH"
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
