@@ -83,6 +83,3 @@ export HISTFILESIZE=$HISTSIZE
 
 # Crowdin
 # export PATH="/opt/homebrew/opt/crowdin@3/bin:$PATH"
-
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
