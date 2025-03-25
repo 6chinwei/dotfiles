@@ -5,3 +5,7 @@
 [user]
     name = 6chinwei
     email = 6chinwei@gmail.com
+
+# Include work-specific git configuration
+# [includeIf "gitdir:~/Projects/work/"]
+#     path = ~/.gitconfig.work
