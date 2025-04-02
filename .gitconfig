@@ -33,6 +33,9 @@
 	tree = log --all --oneline --decorate --graph --author-date-order
 [push]
 	autoSetupRemote = true
+	default = current
+[checkout]
+	defaultRemote = origin
 # use separate file for username / github token / etc
 [include]
 	path = ~/.gitconfig.local
