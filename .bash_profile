@@ -50,10 +50,20 @@ fi
 # Alias
 [[ -r "$HOME/.alias.bash" ]] && source "$HOME/.alias.bash"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # Load nvm
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # Load nvm bash_completion
+# Volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+if command_exists volta; then
+  # Volta completions
+  VOLTA_COMPLETIONS="$HOME/.volta-completions.bash"
+  if [ ! -f "$VOLTA_COMPLETIONS" ]; then
+    volta completions bash > "$VOLTA_COMPLETIONS"
+  fi
+  source "$VOLTA_COMPLETIONS"
+else 
+  echo "'volta' is not installed" >&2
+fi
 
 # History settings
 # Use standard ISO 8601 timestamp: %Y-%m-%d %H:%M:%S (24-hours format)

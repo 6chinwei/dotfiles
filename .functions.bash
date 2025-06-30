@@ -31,3 +31,24 @@ start_localhost_tunnel() {
   echo "[+] Starting Cloudflare Tunnel '$TUNNEL_NAME' to connect localhost:$PORT ..."
   cloudflared tunnel run --url http://localhost:$PORT $TUNNEL_NAME
 }
+
+# Use Volta to replace NVM
+nvm() {
+  local cmd=$1
+  local version=$2
+
+  if [[ "$cmd" == "use" || "$cmd" == "install" ]]; then
+    echo "Setting Node version with Volta..."
+
+    if [[ -n "$version" ]]; then  
+      volta install node@$version
+    elif [[ -f .nvmrc ]]; then
+      version=$(<.nvmrc)
+      volta install node@$version
+    else
+      volta install node
+    fi
+  else
+    echo "[Warning] Please use Volta instead of nvm."
+  fi
+}
