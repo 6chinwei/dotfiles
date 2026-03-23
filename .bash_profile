@@ -87,3 +87,6 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 
 # Crowdin
 # export PATH="/opt/homebrew/opt/crowdin@3/bin:$PATH"
+
+# Claude Code
+export PATH="$HOME/.local/bin:$PATH"
