@@ -60,6 +60,35 @@ main() {
             print_success "Linked $dest → $filename"
         fi
     done
+
+    print_info "Linking bin folder to \$HOME..."
+
+    local bin_src bin_dest
+    bin_src="$(pwd)/bin"
+    bin_dest="$HOME/bin"
+
+    if [ -e "$bin_dest" ] && [ ! -L "$bin_dest" ]; then
+        ask "$bin_dest already exists. Overwrite?"
+        if answer_is_yes; then
+            rm -rf "$bin_dest"
+            ln -s "$bin_src" "$bin_dest"
+            print_success "Replaced $bin_dest → bin"
+        else
+            print_error "Skipped $bin_dest"
+        fi
+    elif [ -L "$bin_dest" ] && [ "$(readlink "$bin_dest")" != "$bin_src" ]; then
+        ask "$bin_dest is a symlink to a different file. Overwrite?"
+        if answer_is_yes; then
+            rm "$bin_dest"
+            ln -s "$bin_src" "$bin_dest"
+            print_success "Updated $bin_dest → bin"
+        else
+            print_error "Skipped $bin_dest"
+        fi
+    else
+        ln -sf "$bin_src" "$bin_dest"
+        print_success "Linked $bin_dest → bin"
+    fi
 }
 
 main
