@@ -1,0 +1,37 @@
+#!/bin/bash
+set -euo pipefail
+
+# This wrapper pulls LINE Jira/Confluence tokens from macOS Keychain
+# and then starts the Atlassian MCP server via `uvx`.
+# 
+# - `KEYCHAIN_JIRA_TOKEN_NAME` and `KEYCHAIN_CONFLUENCE_TOKEN_NAME`
+#    are the names of the tokens stored in macOS Keychain.
+#
+# Claude Code (~/.claude.json) example:
+# ```
+# {
+#   "mcpServers": {
+#     "mcp-atlassian": {
+#       "command": "/Users/rocky.liu/bin/run-line-atlassian-mcp-server",
+#       "args": []
+#     }
+#   }
+# }
+# ```
+
+# Config (macOS Keychain "Service" names)
+KEYCHAIN_JIRA_TOKEN_NAME="line-jira-token-for-mcp"
+KEYCHAIN_CONFLUENCE_TOKEN_NAME="line-confluence-token-for-mcp"
+
+# Environment variables
+export JIRA_URL="https://jira.workers-hub.com"
+export JIRA_PERSONAL_TOKEN="$(
+  security find-generic-password -s "$KEYCHAIN_JIRA_TOKEN_NAME" -w
+)"
+export CONFLUENCE_URL="https://wiki.workers-hub.com"
+export CONFLUENCE_PERSONAL_TOKEN="$(
+  security find-generic-password -s "$KEYCHAIN_CONFLUENCE_TOKEN_NAME" -w
+)"
+
+# Run MCP
+exec uvx mcp-atlassian "$@"

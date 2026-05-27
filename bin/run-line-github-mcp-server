@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+
+# This wrapper pulls the git.linecorp.com token from macOS Keychain
+# and then starts the local `github-mcp-server`.
+#
+# - `KEYCHAIN_TOKEN_NAME` is the name of the token stored in macOS Keychain.
+# - `GITHUB_MCP_SERVER_BIN` is the path to the `github-mcp-server` binary file.
+# 
+# Claude Code (~/.claude.json) example:
+# ```
+# {
+#   "mcpServers": {
+#     "github": {
+#       "command": "/Users/rocky.liu/bin/run-line-github-mcp-server",
+#       "args": []
+#     }
+#   }
+# }
+# ```
+
+# Config
+KEYCHAIN_TOKEN_NAME="line-github-token-for-mcp"
+GITHUB_MCP_SERVER_BIN="$HOME/github-mcp-server/github-mcp-server"
+
+# Environment variables
+export GITHUB_HOST="https://git.linecorp.com"
+export GITHUB_PERSONAL_ACCESS_TOKEN="$(
+  security find-generic-password -s "$KEYCHAIN_TOKEN_NAME" -w
+)"
+
+# Run MCP
+exec "$GITHUB_MCP_SERVER_BIN" stdio
