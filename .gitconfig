@@ -16,6 +16,7 @@
 	mgnf = merge --no-ff
 	pl = pull
 	plb = pull --rebase
+	pr = "!f() { git fetch upstream pull/$1/head:pr-$1 && git switch pr-$1; }; f"
 	r = remote
 	rb = rebase
 	rba = rebase --abort
