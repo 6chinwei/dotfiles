@@ -50,10 +50,19 @@ fi
 # Alias
 [[ -r "$HOME/.alias.bash" ]] && source "$HOME/.alias.bash"
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"  # Load nvm
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"  # Load nvm bash_completion
+# fnm
+if command_exists fnm; then
+  eval "$(fnm env --use-on-cd --shell bash)"
+
+  # Bash completion
+  eval "$(fnm completions --shell bash)"
+
+  # nvm compatibility wrapper
+  nvm() {
+    fnm "$@"
+  }
+  complete -F _fnm nvm
+fi
 
 # History settings
 # Use standard ISO 8601 timestamp: %Y-%m-%d %H:%M:%S (24-hours format)
